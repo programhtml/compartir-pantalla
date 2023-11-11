@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compartir Pantalla</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+        }
+
+        #container {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none;
+        }
+
+        button {
+            padding: 20px;
+            font-size: 20px;
+            cursor: pointer;
+            background-color: #204964;
+            color: #f7f3f3;
+            border: none;
+            border-radius: 4px;
+        }
+    </style>
+    <script src="menu.js"></script>
+</head>
+<body>
+    <div id="container"></div>
+    <button onclick="compartirPantalla()">Compartir</button>
+
+    <script>
+        function compartirPantalla() {
+            const container = document.querySelector("#container");
+            const video = document.createElement("video");
+
+            const options = {
+                video: true,
+            };
+
+            // Mostrar el contenedor solo cuando se hace clic en el botón
+            container.style.display = 'block';
+
+            window.navigator.mediaDevices.getDisplayMedia(options)
+                .then(stream => {
+                    video.srcObject = stream;
+                    video.play();
+                    container.appendChild(video);
+                })
+                .catch(err => console.log(err));
+        }
+    </script>
+</body>
+</html>
